@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fbf6f3">
+  <meta name="description" content="BIZI AKTIBO: entrenamiento personal en Bizkaia, entrenamiento online y asesoramiento nutricional deportivo. Conoce los servicios y tarifas de Lorea.">
+  <title>BIZI AKTIBO · Entrenamiento y nutrición</title>
+  <style>
+    :root{--ink:#272324;--muted:#645e5e;--cream:#fbf6f3;--white:#fff;--pink:#f4bfd0;--pink-deep:#bd587d;--green:#1c584e;--line:#e8dfda;--shadow:0 18px 50px rgba(53,34,39,.07)}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:85px}
+    body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+    a{color:inherit}a:focus-visible,summary:focus-visible{outline:3px solid var(--pink-deep);outline-offset:4px}
+    .wrap{width:min(1110px,calc(100% - 40px));margin-inline:auto}
+    .site-header{background:rgba(251,246,243,.97);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30;backdrop-filter:blur(10px)}
+    .header-inner{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .brand{display:inline-flex;align-items:center;gap:11px;text-decoration:none;font-weight:900;letter-spacing:-.055em;font-size:1.22rem;white-space:nowrap}
+    .brand-mark{display:grid;place-items:center;width:38px;height:38px;border-radius:13px;background:var(--pink);font-size:15px;letter-spacing:-.06em}
+    .header-links{display:flex;align-items:center;gap:25px}
+    .header-links a{font-size:.92rem;font-weight:650;text-decoration:none;white-space:nowrap}
+    .header-links a:hover,.text-link:hover{color:var(--pink-deep)}
+    .button{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:46px;padding:12px 20px;border-radius:100px;font-weight:750;font-size:.93rem;text-decoration:none;line-height:1.25;transition:transform .18s,background .18s,box-shadow .18s}
+    .button:hover{transform:translateY(-2px)}
+    .button-dark{background:var(--ink);color:#fff}.button-dark:hover{background:var(--green)}
+    .button-light{background:#fff;color:var(--ink);border:1px solid #e8deda}
+    .button-pink{background:var(--pink);color:var(--ink)}.button-pink:hover{background:#ecabc3}
+    .button-green{background:var(--green);color:#fff}.button-green:hover{background:#14473f}
+    .header-cta{min-height:40px;padding:9px 17px}
+    .hero{padding:77px 0 68px;overflow:hidden}
+    .hero-grid{display:grid;grid-template-columns:1.12fr .88fr;align-items:center;gap:64px}
+    .eyebrow{text-transform:uppercase;letter-spacing:.16em;color:var(--green);font-size:.72rem;font-weight:850;margin:0 0 18px}
+    h1,h2,h3,p{margin-top:0}h1{font-size:clamp(3.15rem,6.8vw,5.9rem);line-height:1.02;letter-spacing:-.072em;margin-bottom:22px;font-weight:850}
+    .stroke{color:var(--pink-deep)}
+    .hero-copy{font-size:1.09rem;color:var(--muted);max-width:570px;margin:0 0 28px}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+    .micro{display:flex;gap:9px;flex-wrap:wrap;margin:29px 0 0;padding:0;list-style:none}
+    .micro li{font-size:.81rem;background:#fff;border:1px solid var(--line);border-radius:30px;padding:8px 12px;color:#54504f}
+    .hero-art{min-height:470px;border-radius:34px;background:#f5ccda;position:relative;display:flex;align-items:center;justify-content:center;isolation:isolate;overflow:hidden;box-shadow:var(--shadow)}
+    .hero-art:before{content:"";width:360px;height:360px;border:75px solid rgba(255,255,255,.42);border-radius:50%;position:absolute;right:-115px;top:-100px}
+    .hero-art:after{content:"";width:345px;height:345px;border:72px solid rgba(182,79,117,.11);border-radius:50%;position:absolute;left:-150px;bottom:-170px}
+    .art-inner{position:relative;z-index:1;text-align:center;transform:rotate(-6deg);color:#422a33}
+    .art-small{font-size:.85rem;letter-spacing:.26em;font-weight:800;text-transform:uppercase}
+    .art-title{font-size:clamp(4.3rem,8vw,7rem);line-height:.82;font-weight:950;letter-spacing:-.105em;margin:18px 0 22px}
+    .art-foot{font-size:1rem;letter-spacing:.13em;font-weight:800;text-transform:uppercase}
+    .art-sticker{position:absolute;bottom:27px;right:24px;padding:14px 19px;background:#fff;border-radius:17px;z-index:2;font-size:.85rem;font-weight:800;max-width:185px;line-height:1.3;box-shadow:0 8px 20px #b95d7a26}
+    section{padding:72px 0}.section-alt{background:#fff}
+    .section-head{max-width:690px;margin-bottom:29px}.section-title{font-size:clamp(2.1rem,4vw,3.45rem);line-height:1.13;letter-spacing:-.058em;margin:0 0 14px}
+    .section-description{color:var(--muted);font-size:1rem;max-width:630px;margin:0}
+    .services{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+    .service-card{border:1px solid var(--line);background:var(--cream);padding:27px;border-radius:23px;min-height:237px}
+    .service-icon{width:44px;height:44px;border-radius:15px;background:#f5d3e0;display:grid;place-items:center;color:#863d59;font-weight:900;font-size:1.25rem;margin-bottom:22px}
+    .service-card h3{letter-spacing:-.033em;font-size:1.19rem;margin-bottom:9px}
+    .service-card p{font-size:.94rem;color:var(--muted);margin:0}
+    .pricing-group-title{font-size:1.13rem;letter-spacing:-.02em;margin:36px 0 14px}
+    .pricing-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+    .price-card{position:relative;border:1px solid var(--line);border-radius:23px;padding:26px;background:#fff;display:flex;flex-direction:column;box-shadow:0 5px 24px rgba(40,27,28,.025)}
+    .price-card.featured{border:2px solid #d885a2;background:#fff4f7;padding:25px}
+    .price-tag{display:inline-block;align-self:flex-start;background:#f7dbe5;border-radius:100px;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;color:#713a4d;font-weight:850;margin-bottom:15px}
+    .price-card h3{font-size:1.1rem;line-height:1.32;letter-spacing:-.025em;margin-bottom:14px;min-height:44px}
+    .price{font-size:2.75rem;font-weight:870;letter-spacing:-.066em;line-height:1.2;margin:0 0 11px;font-variant-numeric:tabular-nums}
+    .price span{font-weight:550;color:var(--muted);letter-spacing:0;font-size:.91rem}
+    .price-desc{color:var(--muted);font-size:.89rem;margin-bottom:24px;flex:1}
+    .price-card .button{align-self:stretch}
+    .price-strip{border-radius:22px;margin-top:17px;display:flex;align-items:center;justify-content:space-between;gap:20px;background:#e2eee8;padding:25px 28px}
+    .price-strip h3{font-size:1.08rem;margin:0 0 4px}.price-strip p{color:#426258;margin:0;font-size:.91rem}
+    .about-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:55px;align-items:stretch}
+    .about-visual{background:var(--green);color:#fff;display:flex;flex-direction:column;justify-content:space-between;padding:35px;min-height:440px;border-radius:28px;overflow:hidden;position:relative}
+    .about-visual:before{content:"";position:absolute;width:320px;height:320px;border:67px solid #ffffff18;border-radius:50%;right:-125px;bottom:-133px}
+    .about-badge{font-size:.77rem;text-transform:uppercase;letter-spacing:.17em;font-weight:800;color:#d9e8e2;position:relative;z-index:1}
+    .about-visual-big{font-size:clamp(3.6rem,7vw,6.2rem);letter-spacing:-.079em;line-height:.98;font-weight:850;position:relative;z-index:1;margin:40px 0 0}
+    .about-copy{padding:15px 0}.about-copy p{font-size:1.01rem;color:var(--muted)}
+    .credentials{display:grid;gap:13px;margin:23px 0 27px;padding:0;list-style:none}
+    .credentials li{border-top:1px solid var(--line);padding-top:13px;font-size:.93rem;font-weight:650}
+    .credentials li:before{content:"↗";color:var(--green);margin-right:10px;font-weight:900}
+    .questions{max-width:850px;margin-inline:auto}.questions .section-head{margin-inline:auto;text-align:center}
+    details{border-bottom:1px solid var(--line);padding:4px 0}summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;font-weight:750;padding:18px 0}summary::-webkit-details-marker{display:none}
+    summary:after{content:"+";font-size:1.3rem;color:var(--pink-deep)}details[open] summary:after{content:"−"}details p{max-width:750px;color:var(--muted);font-size:.95rem;margin:0 0 20px}
+    .contact{padding:65px 0 80px}.contact-panel{background:var(--ink);color:#fff;border-radius:32px;padding:58px;display:flex;align-items:center;justify-content:space-between;gap:35px}
+    .contact-panel .eyebrow{color:#ffbcd2}.contact-panel h2{font-size:clamp(2.2rem,4.2vw,3.6rem);max-width:590px;line-height:1.11;letter-spacing:-.05em;margin-bottom:15px}
+    .contact-panel p{margin:0;color:#dfd7d7;max-width:620px}
+    .contact-actions{min-width:245px;display:grid;gap:12px}
+    .contact-actions a{width:100%}
+    footer{border-top:1px solid var(--line);padding:23px 0 28px;color:var(--muted);font-size:.79rem}
+    .footer-inner{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}.footer-inner a{color:inherit}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    [hidden]{display:none!important}
+    @media(max-width:900px){.hero-grid{gap:28px}.hero-art{min-height:395px}.hero{padding:55px 0}.services,.pricing-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.about-grid{gap:28px}.header-links{gap:14px}.contact-panel{padding:40px}}
+    @media(max-width:650px){.wrap{width:calc(100% - 34px)}.header-inner{min-height:68px}.header-links a:not(.header-cta){display:none}.header-cta{font-size:.81rem;padding:9px 12px;min-height:37px}.brand{font-size:1.03rem}.brand-mark{width:34px;height:34px;border-radius:11px}.hero{padding:45px 0 43px}.hero-grid,.about-grid{grid-template-columns:1fr;gap:26px}.hero h1{font-size:clamp(3.3rem,11.9vw,4.6rem)}.hero-art{min-height:285px;border-radius:26px}.art-title{font-size:5rem}.art-sticker{font-size:.72rem;bottom:15px;right:15px;padding:10px}.micro{margin-top:22px}.services,.pricing-grid{grid-template-columns:1fr}.service-card{min-height:0}.price-card h3{min-height:0}.price-strip{display:block;padding:24px}.price-strip .button{margin-top:17px}.about-visual{min-height:285px}.about-visual-big{font-size:4.3rem}.about-copy{padding:0}section{padding:54px 0}.contact{padding:50px 0 60px}.contact-panel{padding:31px 24px;display:block;border-radius:25px}.contact-actions{margin-top:25px;min-width:0}.footer-inner{display:grid}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.button{transition:none}}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#inicio" aria-label="BIZI AKTIBO, inicio"><span class="brand-mark" aria-hidden="true">BA</span><span>BIZI AKTIBO</span></a>
+      <nav class="header-links" aria-label="Navegación principal">
+        <a href="#servicios">Servicios</a>
+        <a href="#tarifas">Tarifas</a>
+        <a href="#sobre-mi">Sobre mí</a>
+        <a class="button button-dark header-cta" href="#contacto">Contacto <span aria-hidden="true">↗</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <div class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="eyebrow">Entrenamiento · Nutrición · Bienestar</p>
+          <h1>Muévete.<br>Cuídate.<br><span class="stroke">Vive activo.</span></h1>
+          <p class="hero-copy">Soy Lorea y estoy detrás de BIZI AKTIBO. Te acompaño con entrenamiento y asesoramiento nutricional adaptados a tu punto de partida, tus objetivos y tu día a día.</p>
+          <div class="hero-actions">
+            <a class="button button-dark" href="#tarifas">Ver tarifas <span aria-hidden="true">↗</span></a>
+            <a class="button button-light" href="#sobre-mi">Conóceme</a>
+          </div>
+          <ul class="micro" aria-label="Modalidades">
+            <li>Presencial en Bizkaia</li><li>Online</li><li>Seguimiento personalizado</li>
+          </ul>
+        </div>
+        <div class="hero-art" role="img" aria-label="Ilustración gráfica rosa de la marca BIZI AKTIBO, sin fotografías personales">
+          <div class="art-inner"><div class="art-small">Movimiento y bienestar</div><div class="art-title">BIZI<br>AKTIBO</div><div class="art-foot">A tu ritmo</div></div>
+          <span class="art-sticker">Más movimiento.<br>Más confianza en ti.</span>
+        </div>
+      </div>
+    </div>
+
+    <section class="section-alt" id="servicios" aria-labelledby="titulo-servicios">
+      <div class="wrap">
+        <div class="section-head"><p class="eyebrow">Lo que hacemos</p><h2 class="section-title" id="titulo-servicios">Servicios pensados para ti</h2><p class="section-description">Diferentes formas de trabajar conmigo, con propuestas realistas y atención cercana.</p></div>
+        <div class="services">
+          <article class="service-card"><span class="service-icon" aria-hidden="true">01</span><h3>Entrenamiento presencial</h3><p>Sesiones personales en Bizkaia, adaptadas a tu nivel, objetivos y evolución.</p></article>
+          <article class="service-card"><span class="service-icon" aria-hidden="true">02</span><h3>Entrenamiento online</h3><p>Planificación de entrenamiento personalizada con seguimiento semanal.</p></article>
+          <article class="service-card"><span class="service-icon" aria-hidden="true">03</span><h3>Asesoramiento nutricional</h3><p>Orientación práctica para mejorar tus hábitos de alimentación y apoyar tus objetivos, con seguimiento semanal.</p></article>
+          <article class="service-card"><span class="service-icon" aria-hidden="true">04</span><h3>Pack entrenamiento + nutrición</h3><p>Un servicio combinado para trabajar la actividad física y la alimentación de forma coordinada.</p></article>
+          <article class="service-card"><span class="service-icon" aria-hidden="true">05</span><h3>Pack mixto</h3><p>Combina una sesión presencial con el acompañamiento online.</p></article>
+          <article class="service-card"><span class="service-icon" aria-hidden="true">06</span><h3>Grupos de fuerza</h3><p>Entrenamiento de fuerza en grupo reducido. Consulta disponibilidad y condiciones.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="tarifas" aria-labelledby="titulo-tarifas">
+      <div class="wrap">
+        <div class="section-head"><p class="eyebrow">Sin complicaciones</p><h2 class="section-title" id="titulo-tarifas">Tarifas claras</h2><p class="section-description">Elige la modalidad que mejor encaje contigo. Puedes consultarme cualquier duda antes de empezar.</p></div>
+        <h3 class="pricing-group-title">Servicios online</h3>
+        <div class="pricing-grid">
+          <article class="price-card"><span class="price-tag">Online</span><h3>Entrenamiento personal</h3><p class="price">40 € <span>/ mes</span></p><p class="price-desc">Plan de entrenamiento y seguimiento semanal.</p><a class="button button-dark" href="https://www.instagram.com/bizi.aktibo/" target="_blank" rel="noopener noreferrer" aria-label="Consultar entrenamiento online por Instagram">Consultar servicio <span aria-hidden="true">↗</span></a></article>
+          <article class="price-card"><span class="price-tag">Online</span><h3>Asesoramiento nutricional</h3><p class="price">40 € <span>/ mes</span></p><p class="price-desc">Orientación alimentaria y seguimiento semanal.</p><a class="button button-dark" href="https://www.instagram.com/bizi.aktibo/" target="_blank" rel="noopener noreferrer" aria-label="Consultar asesoramiento nutricional por Instagram">Consultar servicio <span aria-hidden="true">↗</span></a></article>
+          <article class="price-card featured"><span class="price-tag">Pack combinado</span><h3>Entrenamiento + nutrición</h3><p class="price">75 € <span>/ mes</span></p><p class="price-desc">Ambos servicios online, con seguimiento semanal.</p><a class="button button-green" href="https://www.instagram.com/bizi.aktibo/" target="_blank" rel="noopener noreferrer" aria-label="Consultar pack online por Instagram">Consultar pack <span aria-hidden="true">↗</span></a></article>
+        </div>
+        <h3 class="pricing-group-title">Entrenamiento personal presencial · Bizkaia</h3>
+        <div class="pricing-grid">
+          <article class="price-card"><span class="price-tag">Presencial</span><h3>1 sesión</h3><p class="price">35 €</p><p class="price-desc">Una sesión individual de entrenamiento personal.</p><a class="button button-light" href="#contacto">Contactar</a></article>
+          <article class="price-card"><span class="price-tag">Presencial</span><h3>2 sesiones</h3><p class="price">65 €</p><p class="price-desc">Pack de dos sesiones de entrenamiento personal.</p><a class="button button-light" href="#contacto">Contactar</a></article>
+          <article class="price-card"><span class="price-tag">Presencial</span><h3>3 sesiones</h3><p class="price">95 €</p><p class="price-desc">Pack de tres sesiones de entrenamiento personal.</p><a class="button button-light" href="#contacto">Contactar</a></article>
+        </div>
+        <div class="price-strip"><div><h3>Pack mixto · 70 €</h3><p>1 sesión presencial + acompañamiento online. Consulta detalles y condiciones.</p></div><a class="button button-dark" href="#contacto">Pedir información <span aria-hidden="true">↗</span></a></div>
+        <div class="price-strip" style="background:#f7e5eb"><div><h3>Grupos de fuerza</h3><p>Plazas limitadas. Horarios, disponibilidad y tarifas a consultar.</p></div><a class="button button-dark" href="#contacto">Consultar plazas <span aria-hidden="true">↗</span></a></div>
+      </div>
+    </section>
+
+    <section class="section-alt" id="sobre-mi" aria-labelledby="titulo-sobre-mi">
+      <div class="wrap about-grid">
+        <div class="about-visual"><span class="about-badge">Un poco sobre mí</span><p class="about-visual-big">Soy<br>Lorea.</p><span class="about-badge">BIZI AKTIBO</span></div>
+        <div class="about-copy"><p class="eyebrow">Detrás de BIZI AKTIBO</p><h2 class="section-title" id="titulo-sobre-mi">Entrenar también es aprender a cuidarse.</h2><p>Soy entrenadora personal, instructora de actividades dirigidas y asesora en nutrición deportiva. A través de BIZI AKTIBO, quiero ayudarte a encontrar una forma de entrenar y alimentarte que puedas mantener en tu vida real.</p><p>Trabajo con personas que quieren ganar fuerza, mejorar su condición física, crear hábitos más saludables o sentirse mejor con su movimiento diario. Mi enfoque es cercano, adaptado y sin soluciones milagrosas.</p><ul class="credentials"><li>Formación en entrenamiento personal e instrucción fitness (ISED)</li><li>Formación en nutrición deportiva, dietética y nutriterapia</li><li>Formación complementaria en Pilates y envejecimiento saludable</li></ul><a class="button button-light" href="https://www.instagram.com/bizi.aktibo/" target="_blank" rel="noopener noreferrer">Conoce mi día a día en Instagram <span aria-hidden="true">↗</span></a></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="titulo-preguntas"><div class="wrap questions"><div class="section-head"><p class="eyebrow">Preguntas frecuentes</p><h2 class="section-title" id="titulo-preguntas">Lo que quizá quieras saber</h2></div>
+      <details><summary>¿Necesito tener experiencia entrenando?</summary><p>No. Adaptamos el entrenamiento a tu nivel y a tu punto de partida.</p></details>
+      <details><summary>¿Cómo funciona el seguimiento online?</summary><p>Los servicios online de entrenamiento y asesoramiento nutricional incluyen seguimiento semanal para resolver dudas y revisar el progreso.</p></details>
+      <details><summary>¿Dónde se realizan los entrenamientos presenciales?</summary><p>En Bizkaia. Contacta conmigo para conocer las opciones disponibles y los detalles de ubicación.</p></details>
+      <details><summary>¿Cómo puedo empezar?</summary><p>Escríbeme por Instagram, cuéntame qué buscas y te explicaré qué servicio puede encajar contigo.</p></details>
+    </div></section>
+
+    <section class="contact" id="contacto" aria-labelledby="titulo-contacto"><div class="wrap"><div class="contact-panel"><div><p class="eyebrow">Hablemos</p><h2 id="titulo-contacto">Tu próximo paso empieza con una conversación.</h2><p>Cuéntame qué objetivo tienes y qué tipo de ayuda necesitas. Te responderé personalmente.</p></div><div class="contact-actions"><a class="button button-pink" href="https://www.instagram.com/bizi.aktibo/" target="_blank" rel="noopener noreferrer">Contactar por Instagram <span aria-hidden="true">↗</span></a><a class="button button-light" data-whatsapp hidden target="_blank" rel="noopener noreferrer">Contactar por WhatsApp <span aria-hidden="true">↗</span></a><a class="button button-light" href="https://www.instagram.com/bizi.aktibo/" target="_blank" rel="noopener noreferrer">@bizi.aktibo <span aria-hidden="true">↗</span></a></div></div></div></section>
+  </main>
+
+  <footer><div class="wrap footer-inner"><span>© <span id="year">2026</span> BIZI AKTIBO · Lorea</span><span>Entrenamiento presencial en Bizkaia y servicios online</span><span>El asesoramiento nutricional no sustituye la atención sanitaria.</span></div></footer>
+
+  <script>
+    // Opcional: pon aquí tu número de WhatsApp, con prefijo internacional y SIN el símbolo +.
+    // Ejemplo de formato (NO es un número real): "34600000000".
+    // Si está vacío, el enlace de WhatsApp no aparece y el sitio sigue funcionando.
+    const WHATSAPP_NUMBER = "";
+    document.getElementById("year").textContent = new Date().getFullYear();
+    if (/^\d{10,15}$/.test(WHATSAPP_NUMBER)) {
+      const message = encodeURIComponent("Hola, Lorea. Me gustaría recibir información sobre los servicios de BIZI AKTIBO.");
+      document.querySelectorAll("[data-whatsapp]").forEach(link => {
+        link.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+        link.hidden = false;
+      });
+    }
+  </script>
+</body>
+</html>
