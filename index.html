@@ -38,7 +38,8 @@ async function reserve(){
  const result=$('result'),name=$('name').value.trim(),email=$('email').value.trim(),phone=$('phone').value.trim();
  if(!window.biziBackend?.ready){result.textContent='Conectando con Firebase… / Firebase-rekin konektatzen…';return}
  if(!cart.length){result.textContent=t('atLeast');return}if(activePack){const p=records.find(p=>p.id===activePack);if(!p||cart.some(s=>!isWithinPack(p,s))){result.textContent='El bono ha caducado o la fecha supera su validez.';return}}
- if(!name||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||phone.length<7){result.textContent=t('invalid');return}
+ if(isVerifiedClient()&&email.toLowerCase()!==current.email.toLowerCase()){result.textContent='Usa el mismo correo con el que has accedido.';return}
+  if(!name||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||phone.length<7){result.textContent=t('invalid');return}
  const btn=$('reserve');btn.disabled=true;result.textContent='Guardando en Firebase…';
  try{await window.biziBackend.book({name,email,phone,qty:packQty(),slots:[...cart],packId:activePack});
  cart=[];activePack=null;$('package').disabled=false;result.className='notice success';result.textContent=lang==='eu'?'Erreserba Firebase-n gorde da. Ordainketa aplikaziotik kanpo egiten da.':'Reserva guardada en Firebase. El pago se realiza fuera de la aplicación.';
@@ -54,6 +55,7 @@ const add=document.createElement('button');add.id='addSlot';add.type='button';ad
 const oldSetLang=setLang;setLang=function(l){oldSetLang(l);$('addSlot').textContent=t('add')};setLang('es');
 </script>
 <section class="wrap" id="booking-policy" style="max-width:780px;margin:20px auto;padding:20px;border:1px solid #efcbd9;border-radius:18px;background:#fff8fb"><h2>Condiciones de las reservas / Erreserben baldintzak</h2><p><strong>Bonos de 2 y 3 sesiones:</strong> válidos durante un mes desde la fecha de la primera sesión reservada. Las sesiones pendientes deben realizarse dentro de ese plazo.</p><p><strong>Cancelaciones:</strong> desde esta web con al menos 24 horas de antelación. La sesión cancelada a tiempo vuelve a estar disponible en el bono, dentro de su período de validez.</p><p><strong>Pagos:</strong> no se cobran en esta web. La reserva no constituye un pago.</p><p><strong>Acceso:</strong> las reservas están asociadas a este navegador. Si cambias de dispositivo o borras sus datos, contacta por WhatsApp para recuperar la gestión de tus sesiones.</p><p><strong>Euskaraz:</strong> 2 eta 3 saioko bonuek hilabeteko balioa dute lehen erreserbatutako saiotik. Ezeztapenak gutxienez 24 ordu lehenago egin daitezke; saioa bonuan berreskuratuko da, iraungitze-dataren barruan. Ordainketak webgunetik kanpo egiten dira.</p></section>
+<section id="client-access" class="wrap" style="max-width:780px;margin:22px auto;padding:24px;border:1px solid #efcbd9;border-radius:20px;background:white"><h2>Acceso a mis reservas / Nire erreserbak</h2><p>Recibe un enlace en tu correo para acceder a tus bonos desde cualquier dispositivo. No necesitas contraseña.</p><form id="client-link-form" style="display:grid;gap:12px"><label>Tu correo electrónico <input id="client-link-email" type="email" autocomplete="email" required placeholder="nombre@correo.com"></label><button class="btn" type="submit" id="client-link-send">Enviar enlace de acceso</button></form><div id="client-session" hidden><p id="client-session-label"></p><button class="btn outline" id="client-logout" type="button">Cerrar sesión de cliente</button></div><p id="client-link-status" role="status" style="overflow-wrap:anywhere"></p><p class="notice">Fase de pruebas. Las reservas antiguas realizadas como invitado no se trasladan automáticamente a una cuenta de correo.</p></section>
 <section id="admin" class="wrap" style="max-width:780px;margin:48px auto;padding:24px;border:1px solid #efcbd9;border-radius:20px;background:#fff8fb">
 <h2 style="margin-top:0">Panel privado · BIZI AKTIBO</h2>
 <p>Acceso exclusivo para la administradora. Esta versión comprueba la conexión segura con Firebase. Bonos y cancelaciones: versión candidata. No abrir a clientes hasta publicar las nuevas reglas de seguridad y completar las pruebas.</p>
@@ -63,7 +65,7 @@ const oldSetLang=setLang;setLang=function(l){oldSetLang(l);$('addSlot').textCont
 </section>
 <script type="module">
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
-import {getAuth,onAuthStateChanged,signInAnonymously,signInWithEmailAndPassword,signOut} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
+import {getAuth,onAuthStateChanged,signInAnonymously,signInWithEmailAndPassword,signOut,sendSignInLinkToEmail,isSignInWithEmailLink,signInWithEmailLink} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
 import {getFirestore,collection,doc,getDocs,getDoc,query,where,runTransaction,deleteDoc,onSnapshot} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
 const cfg={apiKey:'AIzaSyDyQOgKNsD4cumNUhp-kdfLfteIvUgpEjI',authDomain:'bizi-aktibo.firebaseapp.com',projectId:'bizi-aktibo',storageBucket:'bizi-aktibo.firebasestorage.app',messagingSenderId:'329464502940',appId:'1:329464502940:web:c490e602a30b8972e7ab59'};
 const ADMIN='WxqEok89PhU4SK6EFmB5dafF4xC3';
@@ -71,10 +73,13 @@ const msg=document.getElementById('firebase-message'),login=document.getElementB
 const slotId=s=>s.date+'_'+s.time.replace(':','');
 const auth=getAuth(initializeApp(cfg)),db=getFirestore();
 let current=null,unsubscribeSlots=null,unsubscribeBookings=null;
+const clientStatus=document.getElementById('client-link-status');
+const isVerifiedClient=()=>!!current&&!current.isAnonymous&&!!current.emailVerified;
+const canBook=()=>!!current&&(current.uid===ADMIN||isVerifiedClient());
 window.biziOccupied=new Set();
 window.biziBackend={ready:false,async refresh(){if(!current)return;const q=query(collection(db,'reservas'),where('owner','==',current.uid));const snap=await getDocs(q);records=snap.docs.map(d=>({id:d.id,...d.data()}));renderMine();renderBasket();renderSlots()},
  async book({name,email,phone,qty,slots,packId}){
- if(!current)throw Error('No hay conexión con Firebase');
+ if(!canBook())throw Error('Accede primero mediante el enlace enviado a tu correo.');
  if(!Number.isInteger(qty)||qty<1||qty>3||!slots.length||slots.length>qty)throw Error('Bono no válido');
  const ids=slots.map(slotId);if(new Set(ids).size!==ids.length)throw Error('Horario repetido');
  for(const s of slots){const d=new Date(s.date+'T12:00:00'),valid=d.getDay()===5?['19:00','20:00','21:00']:d.getDay()===6?['10:00','11:00']:[];if(!valid.includes(s.time)||studioDate(s.date,s.time)<=new Date())throw Error('Horario no disponible')}
@@ -94,7 +99,7 @@ window.biziBackend={ready:false,async refresh(){if(!current)return;const q=query
  },
  async cancel(id,date,time){if(!current)throw Error('Sin sesión');if(!canCancel({date,time}))throw Error('No puedes cancelar con menos de 24 horas de antelación');const ref=doc(db,'reservas',String(id)),sr=doc(db,'horarios',slotId({date,time}));await runTransaction(db,async tx=>{const p=await tx.get(ref),s=await tx.get(sr);if(!p.exists()||p.data().owner!==current.uid||!s.exists()||s.data().packId!==id)throw Error('No puedes cancelar esta sesión');const slots=p.data().slots.filter(x=>x.date!==date||x.time!==time);tx.update(ref,{slots,updatedAt:Date.now()});tx.delete(sr)})}
 };
-function updateUi(){const admin=!!current&&current.uid===ADMIN;login.hidden=admin;panel.hidden=!admin;window.biziBackend.ready=!!current;document.getElementById('reserve').disabled=!current;renderMine();renderSlots();if(admin){document.getElementById('admin-status').textContent='Sesión iniciada como '+current.email;getDocs(collection(db,'reservas')).then(s=>{const box=document.getElementById('admin-data');box.textContent='Reservas: '+s.size;const wrap=document.createElement('div');s.docs.forEach(d=>{const p=d.data(),el=document.createElement('p');el.textContent=p.name+' · '+p.email+' · '+p.phone+' · '+(p.slots||[]).map(x=>x.date+' '+x.time).join(', ');wrap.append(el)});box.append(wrap)}).catch(()=>document.getElementById('admin-data').textContent='No se pudieron leer las reservas. Comprueba las reglas.')}}
+function updateUi(){const admin=!!current&&current.uid===ADMIN;login.hidden=admin;panel.hidden=!admin;window.biziBackend.ready=!!current;document.getElementById('reserve').disabled=!canBook();const cs=document.getElementById('client-session'),cf=document.getElementById('client-link-form');cs.hidden=!isVerifiedClient();cf.hidden=isVerifiedClient();document.getElementById('client-session-label').textContent=isVerifiedClient()?'Sesión iniciada: '+current.email:'';renderMine();renderSlots();if(admin){document.getElementById('admin-status').textContent='Sesión iniciada como '+current.email;getDocs(collection(db,'reservas')).then(s=>{const box=document.getElementById('admin-data');box.textContent='Reservas: '+s.size;const wrap=document.createElement('div');s.docs.forEach(d=>{const p=d.data(),el=document.createElement('p');el.textContent=p.name+' · '+p.email+' · '+p.phone+' · '+(p.slots||[]).map(x=>x.date+' '+x.time).join(', ');wrap.append(el)});box.append(wrap)}).catch(()=>document.getElementById('admin-data').textContent='No se pudieron leer las reservas. Comprueba las reglas.')}}
 try{
  document.getElementById('admin-form').addEventListener('submit',async e=>{e.preventDefault();msg.textContent='Conectando…';try{await signInWithEmailAndPassword(auth,document.getElementById('admin-email').value.trim(),document.getElementById('admin-password').value);document.getElementById('admin-password').value='';msg.textContent='';}catch(e){msg.textContent='No se ha podido iniciar sesión. Revisa correo, contraseña y dominios autorizados.'}});
  document.getElementById('admin-logout').addEventListener('click',async()=>{await signOut(auth);await signInAnonymously(auth)});
